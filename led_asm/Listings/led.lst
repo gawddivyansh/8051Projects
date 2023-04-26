@@ -1,0 +1,57 @@
+A51 MACRO ASSEMBLER  LED                                                                  03/02/2023 23:59:45 PAGE     1
+
+
+MACRO ASSEMBLER A51 V8.2.7.0
+OBJECT MODULE PLACED IN .\Objects\led.obj
+ASSEMBLER INVOKED BY: D:\Program Files\Keil_v5\C51\BIN\A51.EXE led.asm SET(SMALL) DEBUG PRINT(.\Listings\led.lst) OBJECT
+                      (.\Objects\led.obj) EP
+
+LOC  OBJ            LINE     SOURCE
+
+0000                   1     ORG 00h ;The ORG directive is used to indicate the beginning of the address
+                       2                     ;The number that comes after ORG can be either in hex and decimal
+                       3                     ;If the number is not followed by H, it is decimal and the assembler will c
+                             onvert it to hex
+                       4     
+                       5     
+0000 7590FF            6     HERE:   MOV P1,#0FFH   ; led P1
+0003 12000E            7                     LCALL DELAY
+0006 759000            8                     MOV P1,#00H
+0009 12000E            9                     LCALL DELAY
+000C 80F2             10                 SJMP HERE
+                      11     
+                      12     
+                      13     ; delay = 2 x 7 x 255 x 255 x 1.085us = 0.99 s
+000E 7807             14     DELAY:  MOV R0,#07
+0010 79FF             15     HERE3:  MOV R1,#255
+0012 7AFF             16     HERE2:  MOV R2,#255
+0014 DAFE             17     HERE1:  DJNZ R2,HERE1
+0016 D9FA             18                     DJNZ R1,HERE2
+0018 D8F6             19                     DJNZ R0,HERE3
+                      20              
+001A 22               21                 RET
+                      22     
+                      23      END
+                              ;This indicates to the assembler the end of the source (asm) file
+                              ;The END directive is the last line of an 8051 program
+                              ;Mean that in the code anything after the END directive is ignored by the assembler
+A51 MACRO ASSEMBLER  LED                                                                  03/02/2023 23:59:45 PAGE     2
+
+SYMBOL TABLE LISTING
+------ ----- -------
+
+
+N A M E             T Y P E  V A L U E   ATTRIBUTES
+
+DELAY. . . . . . .  C ADDR   000EH   A   
+HERE . . . . . . .  C ADDR   0000H   A   
+HERE1. . . . . . .  C ADDR   0014H   A   
+HERE2. . . . . . .  C ADDR   0012H   A   
+HERE3. . . . . . .  C ADDR   0010H   A   
+P1 . . . . . . . .  D ADDR   0090H   A   
+
+
+REGISTER BANK(S) USED: 0 
+
+
+ASSEMBLY COMPLETE.  0 WARNING(S), 0 ERROR(S)

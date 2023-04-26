@@ -1,0 +1,60 @@
+C51 COMPILER V9.56.0.0   INTERRUPT                                                         12/01/2017 10:56:28 PAGE 1   
+
+
+C51 COMPILER V9.56.0.0, COMPILATION OF MODULE INTERRUPT
+OBJECT MODULE PLACED IN .\Objects\interrupt.obj
+COMPILER INVOKED BY: C:\Keil_8051\C51\BIN\C51.EXE interrupt.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listin
+                    -gs\interrupt.lst) TABS(2) OBJECT(.\Objects\interrupt.obj)
+
+line level    source
+
+   1          #include<reg51.h>
+   2          
+   3          void MSDelay(unsigned int);
+   4          
+   5          sbit sq_wave=P1^3;
+   6          sbit LED=P1^4;
+   7          sbit SW=P3^2;
+   8          
+   9          void EINT_LED() interrupt 0 
+  10          {
+  11   1      LED=~LED;  //cpl
+  12   1      MSDelay(500); 
+  13   1      }
+  14          
+  15          void MSDelay(unsigned int time)
+  16          {
+  17   1      unsigned int i,j;
+  18   1      for (i=0;i<time;i++)
+  19   1      for (j=0;j<113;j++);
+  20   1      }
+  21          
+  22          void main() 
+  23          {
+  24   1      SW=1; // p3.2 input
+  25   1      LED=0;
+  26   1      IT0=0; //LEVEL TRIGGERED
+  27   1      IE=0x81; //enable interrupt for EINT0 EXTERNAL INTERRUPT 0
+  28   1      while (1) 
+  29   1      {
+  30   2      sq_wave=1; 
+  31   2      MSDelay(500);
+  32   2      sq_wave=0;
+  33   2      MSDelay(500);
+  34   2      }
+  35   1      }
+  36          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    122    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

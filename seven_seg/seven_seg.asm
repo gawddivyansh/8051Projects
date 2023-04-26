@@ -1,0 +1,25 @@
+ORG 0000H
+	
+    MOV A,#00H
+    AGAIN: MOV R5,#10 ;counter
+    MOV DPTR,#500H
+    HERE: MOVC A,@A+DPTR
+    MOV P3,A
+    LCALL DELAY
+    INC DPTR
+    MOV A,#00H
+    DJNZ R5,HERE
+    SJMP AGAIN
+
+DELAY:      MOV R0,#07
+	   HERE3:MOV R1,#255
+	   HERE2:MOV R2,#255
+	   HERE1:DJNZ R2,HERE1
+	         DJNZ R1,HERE2
+	         DJNZ R0,HERE3
+	   RET
+
+ORG 500H
+    DB 3FH,06H,5BH,4FH,66H,6DH,7DH,07H,7FH,67H ;common cathode
+
+END
